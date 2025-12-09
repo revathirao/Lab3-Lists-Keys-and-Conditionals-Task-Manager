@@ -88,6 +88,83 @@ Lab checklist to guarantee full credit
 
 Tell me the number!
 
-
 A full lab-ready explanation section
 📌 A full write-up describing system design (for submission)=
+
+Folder Structure
+lab3-task-manager/
+│ App.tsx
+└─ src/
+├─ types/
+│ └── index.ts
+├─ components/
+├── TaskFilter/
+│ └── TaskFilter.tsx
+├── TaskList/
+│ └── TaskList.tsx
+└── TaskItem/
+└── TaskItem.tsx
+
+import type { TaskItemProps } from "../../types";
+
+export default function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
+return (
+
+<li style={{ border: "1px solid gray", padding: "10px", margin: "10px 0" }}>
+<h3>{task.title}</h3>
+<p>{task.description}</p>
+
+      <p>Status: {task.status}</p>
+
+      <select
+        value={task.status}
+        onChange={(e) => onStatusChange(task.id, e.target.value as any)}
+      >
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+
+      <button onClick={() => onDelete(task.id)}>Delete</button>
+
+      <p>Priority: {task.priority}</p>
+      <p>Due: {task.dueDate}</p>
+    </li>
+
+);
+}
+
+---
+
+<ul>
+  {tasks.map(task => (
+    <li key={task.id}>
+      <TaskItem task={task} onStatusChange={...} onDelete={...} />
+    </li>
+
+    Complete Component Flow Summary (Perfect for Lab Report)
+                                     ┌───────────────┐
+                                     │    App.tsx     │
+                                     │  (Holds state) │
+                                     └───────┬────────┘
+                 filter props & handlers    │   filtered tasks + handlers
+                                             ▼
+                            ┌─────────────────────────────┐
+                            │         TaskFilter           │
+                            │ (User picks filters UI only)│
+                            └──────────────┬──────────────┘
+                                           │ filter changes
+                                           ▼
+                                    App.tsx updates state
+                                           │
+                                           ▼
+                            ┌─────────────────────────────┐
+                            │          TaskList            │
+                            │ (Renders <ul> + <li>)       │
+                            └──────────────┬──────────────┘
+                                           │ per-task props
+                                           ▼
+                            ┌─────────────────────────────┐
+                            │           TaskItem           │
+                            │ (Events: status, delete)    │
+                            └─────────────────────────────┘
