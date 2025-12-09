@@ -1,11 +1,11 @@
 import type { TaskListProps } from "../../types";
-import TaskItem from "../TaskItem/TaskItem";
+import { TaskItem } from "../TaskItem/TaskItem";
 
 export function TaskList({ tasks, onStatusChange, onDelete }: TaskListProps) {
    return (
       <div>
          {tasks.length === 0 ? (
-            <p>No tasks available.</p>
+            <p> No tasks available.</p>
          ) : (
             <ul style={{ paddingLeft: 0, listStyle: "none" }}>
                {tasks.map((task) => (

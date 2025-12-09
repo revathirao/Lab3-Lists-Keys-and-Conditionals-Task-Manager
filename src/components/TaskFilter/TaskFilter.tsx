@@ -1,4 +1,4 @@
-import type { TaskFilterProps, TaskStatus } from "../../types";
+import type { TaskFilterProps, TaskStatus, Priority } from "../../types";
 
 export function TaskFilter({ onFilterChange }: TaskFilterProps) {
    return (
@@ -7,7 +7,12 @@ export function TaskFilter({ onFilterChange }: TaskFilterProps) {
             Status:{""}
             <select
                onChange={(e) =>
-                  onFilterChange({ status: e.target.value as TaskStatus })
+                  onFilterChange({
+                     status:
+                        e.target.value === ""
+                           ? undefined
+                           : (e.target.value as TaskStatus),
+                  })
                }>
                <option value="">All Statuses</option>
                <option value="pending">Pending</option>
@@ -19,7 +24,16 @@ export function TaskFilter({ onFilterChange }: TaskFilterProps) {
          <label style={{ marginLeft: "20px" }}>
             Priority:{" "}
             <select
-               onChange={(e) => onFilterChange({ priority: e.target.value })}>
+               // onChange={(e) => onFilterChange({ priority: e.target.value as Priority })}>
+
+               onChange={(e) =>
+                  onFilterChange({
+                     priority:
+                        e.target.value === ""
+                           ? undefined
+                           : (e.target.value as Priority),
+                  })
+               }>
                <option value="">All Priorities</option>
                <option value="low">Low</option>
                <option value="medium">Medium</option>

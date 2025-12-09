@@ -129,6 +129,7 @@ return (
 
       <p>Priority: {task.priority}</p>
       <p>Due: {task.dueDate}</p>
+
     </li>
 
 );
@@ -168,3 +169,15 @@ return (
                             │           TaskItem           │
                             │ (Events: status, delete)    │
                             └─────────────────────────────┘
+
+---
+
+They do NOT store their own state
+
+They rely on props:
+
+TaskList → receives tasks, onStatusChange, onDelete
+
+TaskFilter → receives onFilterChange
+
+TaskItem → receives task, onStatusChange, onDelete

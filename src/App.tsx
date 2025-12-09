@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TaskFilter } from "./components/TaskFilter/TaskFilter";
 import { TaskList } from "./components/TaskList/TaskList";
-import type { Task, TaskStatus } from "./types";
+import type { Priority, Task, TaskStatus } from "./types";
 
 import "./App.css";
 
@@ -34,12 +34,8 @@ export default function App() {
       },
    ]);
 
-   //  type FilterStatus = TaskStatus | "";
-
    const [statusFilter, setStatusFilter] = useState<TaskStatus | "">("");
-   const [priorityFilter, setPriorityFilter] = useState<
-      "low" | "medium" | "high" | ""
-   >("");
+   const [priorityFilter, setPriorityFilter] = useState<Priority | "">("");
 
    //  Filtered tasks
 
