@@ -1,6 +1,9 @@
 import { useState } from "react";
+import type { Task, TaskStatus } from "./src/types";
+
 import TaskFilter from "./src/components/TaskFilter/TaskFilter";
 import TaskList from "./src/components/TaskList/TaskList";
+
 import "./App.css";
 
 export default function App() {
@@ -11,7 +14,7 @@ export default function App() {
          description: "Description 1",
          status: "pending",
          priority: "low",
-         dueDate: "2024-12-31",
+         dueDate: "2025-12-31",
       },
       {
          id: "2",
@@ -19,9 +22,64 @@ export default function App() {
          description: "Description 2",
          status: "in-progress",
          priority: "medium",
-         dueDate: "2024-12-30",
+         dueDate: "2025-12-30",
+      },
+
+      {
+         id: "3",
+         title: "Task 3",
+         description: "Description 3",
+         status: "completed",
+         priority: "High",
+         dueDate: "2025-12-29",
       },
    ]);
 
-   return <></>;
+   //  type FilterStatus = TaskStatus | "";
+
+   const [statusFilter, setStatusFilter] = useState<TaskStatus | "">("");
+   const [priorityFilter, setPriorityFilter] = useState<
+      "low" | "medium" | "high" | ""
+   >("");
+
+   //  Filtered tasks
+
+   const filteredTasks = tasks.filter(function (t) {
+      if (statusFilter !== "" && t.status !== statusFilter) return false;
+      if (priorityFilter !== "" && t.status !== priorityFilter) return false;
+      return true;
+   });
+
+   const handleDelete = (taskId: string) => {
+      const newTasksList = tasks.filter((task) => {
+         return task.id !== taskId; // keep only tasks that don't match the ID
+      });
+
+      setTasks(newTasksList);
+   };
+
+   // Handlers
+   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
+      const newTasksList = tasks.map((task) =>
+         task.id === taskId ? { ...task, status: newStatus } : task
+      );
+      setTasks(newTasksList);
+   };
+
+   const handleFilterChange = (filters: any) => {
+      if (filters.status !== undefined) setStatusFilter(filters.status);
+      if (filters.priority !== undefined) setPriorityFilter(filters.priority);
+   };
+
+   return (
+      <div style={{ padding: "20px" }}>
+         <h1>Task Manager</h1>
+         <TaskFilter onFilterChange={handleFilterChange} />
+         <TaskList
+            onStatusChange={handleStatusChange}
+            tasks={filteredTasks}
+            onDelete={handleDelete}
+         />
+      </div>
+   );
 }
