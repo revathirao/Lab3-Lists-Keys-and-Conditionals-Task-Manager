@@ -1,13 +1,12 @@
 import { useState } from "react";
-import type { Task, TaskStatus } from "./src/types";
-
-import TaskFilter from "./src/components/TaskFilter/TaskFilter";
-import TaskList from "./src/components/TaskList/TaskList";
+import { TaskFilter } from "./components/TaskFilter/TaskFilter";
+import { TaskList } from "./components/TaskList/TaskList";
+import type { Task, TaskStatus } from "./types";
 
 import "./App.css";
 
 export default function App() {
-   const [tasks, setTasks] = useState([
+   const [tasks, setTasks] = useState<Task[]>([
       {
          id: "1",
          title: "Task 1",
@@ -30,7 +29,7 @@ export default function App() {
          title: "Task 3",
          description: "Description 3",
          status: "completed",
-         priority: "High",
+         priority: "high",
          dueDate: "2025-12-29",
       },
    ]);
@@ -46,7 +45,7 @@ export default function App() {
 
    const filteredTasks = tasks.filter(function (t) {
       if (statusFilter !== "" && t.status !== statusFilter) return false;
-      if (priorityFilter !== "" && t.status !== priorityFilter) return false;
+      if (priorityFilter !== "" && t.priority !== priorityFilter) return false;
       return true;
    });
 
