@@ -18,7 +18,6 @@ export interface TaskListProps {
 }
 
 //TaskItem Component
-
 export interface TaskItemProps {
    task: Task;
    onStatusChange: (taskId: string, newStatus: TaskStatus) => void;

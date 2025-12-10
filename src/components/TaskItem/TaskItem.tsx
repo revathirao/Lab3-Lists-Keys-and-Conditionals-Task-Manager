@@ -31,10 +31,10 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
       <li className="task-item">
          <h3> {task.title}</h3>
          <p>{task.description}</p>
-         {/* <p>Status:{task.status}</p> */}
 
          <div className="task-actions">
             <select
+               id="task-item-status"
                value={task.status}
                onChange={(e) => onStatusChange(task.id, e.target.value as any)}
                style={getStatusStyles(task.status)}>
@@ -49,7 +49,6 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
          </div>
 
          <div className="task-priority-due">
-            {/* <p className={`priority-${task.priority}`}> */}
             <p
                className="task-priority"
                style={getPriorityStyles(task.priority)}>

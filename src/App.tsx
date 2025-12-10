@@ -42,17 +42,11 @@ export default function App() {
 
    //Filtered tasks
    //Calculates a new array containing only the tasks that match filters.
-   // const filteredTasks = tasks.filter(function (t) {
-   //    //If status is selected & task’s status is different exclude the task(same for Priority)
-   //    if (statusFilter !== "" && t.status !== statusFilter) return false;
-   //    if (priorityFilter !== "" && t.priority !== priorityFilter) return false;
-   //    return true; //Keep the task passed the filter check
-   // });
-   const filteredTasks = tasks.filter((t) => {
-      const statusMatch = statusFilter === "" || t.status === statusFilter;
-      const priorityMatch =
-         priorityFilter === "" || t.priority === priorityFilter;
-      return statusMatch && priorityMatch;
+   const filteredTasks = tasks.filter(function (t) {
+      //If status is selected & task’s status is different exclude the task(same for Priority)
+      if (statusFilter !== "" && t.status !== statusFilter) return false;
+      if (priorityFilter !== "" && t.priority !== priorityFilter) return false;
+      return true; //Keep the task passed the filter check
    });
 
    //function to delete a task by its id.
