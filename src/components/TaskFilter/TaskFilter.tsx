@@ -2,7 +2,7 @@ import type { TaskFilterProps, TaskStatus, Priority } from "../../types";
 
 export function TaskFilter({ onFilterChange }: TaskFilterProps) {
    return (
-      <div style={{ marginBottom: "20px" }}>
+      <div className="task-filter" style={{ marginBottom: "20px" }}>
          <label>
             Status:{""}
             <select

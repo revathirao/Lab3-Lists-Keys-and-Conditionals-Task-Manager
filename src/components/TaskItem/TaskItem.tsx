@@ -1,28 +1,62 @@
-import type { TaskItemProps } from "../../types";
+import type { TaskItemProps, Priority, TaskStatus } from "../../types";
+
+function getPriorityStyles(priority: Priority) {
+   if (priority === "high") {
+      return { color: "red" };
+   }
+   if (priority === "medium") {
+      return { color: "orange" };
+   }
+   if (priority === "low") {
+      return { color: "green" };
+   }
+   return {}; // default
+}
+
+function getStatusStyles(status: TaskStatus) {
+   if (status === "pending") {
+      return { backgroundColor: "yellow", color: "brown" };
+   }
+   if (status === "in-progress") {
+      return { color: "blue" };
+   }
+   if (status === "completed") {
+      return { color: "green" };
+   }
+   return {};
+}
 
 export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
    return (
-      <li
-         style={{
-            border: "1px solid gray",
-            padding: "10px",
-            margin: "10px 0",
-         }}>
+      <li className="task-item">
          <h3> {task.title}</h3>
          <p>{task.description}</p>
-         <p>Status:{task.status}</p>
-         <select
-            value={task.status}
-            onChange={(e) => onStatusChange(task.id, e.target.value as any)}>
-            <option value="pending">Pending</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-         </select>
+         {/* <p>Status:{task.status}</p> */}
 
-         <button onClick={() => onDelete(task.id)}>Delete</button>
+         <div className="task-actions">
+            <select
+               value={task.status}
+               onChange={(e) => onStatusChange(task.id, e.target.value as any)}
+               style={getStatusStyles(task.status)}>
+               <option value="pending">Pending</option>
+               <option value="in-progress">In Progress</option>
+               <option value="completed">Completed</option>
+            </select>
 
-         <p>Priority: {task.priority}</p>
-         <p>Due: {task.dueDate}</p>
+            <button className="delete-btn" onClick={() => onDelete(task.id)}>
+               Delete
+            </button>
+         </div>
+
+         <div className="task-priority-due">
+            {/* <p className={`priority-${task.priority}`}> */}
+            <p
+               className="task-priority"
+               style={getPriorityStyles(task.priority)}>
+               Priority: {task.priority}
+            </p>
+            <p>Due: {task.dueDate}</p>
+         </div>
       </li>
    );
 }

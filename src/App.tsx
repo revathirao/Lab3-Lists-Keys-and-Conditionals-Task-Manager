@@ -2,9 +2,11 @@ import { useState } from "react";
 import { TaskFilter } from "./components/TaskFilter/TaskFilter";
 import { TaskList } from "./components/TaskList/TaskList";
 import type { Priority, Task, TaskStatus } from "./types";
-
 import "./App.css";
 
+/* Declares a state variable named tasks.
+ setTasks is the function used to update tasks.
+Initial state is an array of Task objects*/
 export default function App() {
    const [tasks, setTasks] = useState<Task[]>([
       {
@@ -34,46 +36,64 @@ export default function App() {
       },
    ]);
 
+   //Creates a state variable statusFilterCreates & priority filter
    const [statusFilter, setStatusFilter] = useState<TaskStatus | "">("");
    const [priorityFilter, setPriorityFilter] = useState<Priority | "">("");
 
-   //  Filtered tasks
-
-   const filteredTasks = tasks.filter(function (t) {
-      if (statusFilter !== "" && t.status !== statusFilter) return false;
-      if (priorityFilter !== "" && t.priority !== priorityFilter) return false;
-      return true;
+   //Filtered tasks
+   //Calculates a new array containing only the tasks that match filters.
+   // const filteredTasks = tasks.filter(function (t) {
+   //    //If status is selected & task’s status is different exclude the task(same for Priority)
+   //    if (statusFilter !== "" && t.status !== statusFilter) return false;
+   //    if (priorityFilter !== "" && t.priority !== priorityFilter) return false;
+   //    return true; //Keep the task passed the filter check
+   // });
+   const filteredTasks = tasks.filter((t) => {
+      const statusMatch = statusFilter === "" || t.status === statusFilter;
+      const priorityMatch =
+         priorityFilter === "" || t.priority === priorityFilter;
+      return statusMatch && priorityMatch;
    });
 
+   //function to delete a task by its id.
+   //Creates a new array, excluding the deleted task.
    const handleDelete = (taskId: string) => {
       const newTasksList = tasks.filter((task) => {
          return task.id !== taskId; // keep only tasks that don't match the ID
       });
-
-      setTasks(newTasksList);
+      setTasks(newTasksList); //Updates the tasks state & re-renders the UI without the deleted task
    };
 
    // Handlers
+   //function to update a task's status (pending → completed
    const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
+      //Loops through all tasks and updates only the one that matches taskId
       const newTasksList = tasks.map((task) =>
          task.id === taskId ? { ...task, status: newStatus } : task
-      );
-      setTasks(newTasksList);
+      ); //return a new task object with the updated status or return unchanged task
+      setTasks(newTasksList); //Saves the updated task list into state.
    };
 
+   //function updates the status and Priority
    const handleFilterChange = (filters: any) => {
       if (filters.status !== undefined) setStatusFilter(filters.status);
       if (filters.priority !== undefined) setPriorityFilter(filters.priority);
    };
 
    return (
+      //statr rendering UI
       <div style={{ padding: "20px" }}>
          <h1>Task Manager</h1>
+
+         {/* Renders the TaskFilter component. */}
+         {/* Passes the filter change handler as a prop */}
          <TaskFilter onFilterChange={handleFilterChange} />
+         {/* Passes the filter change handler as a prop */}
          <TaskList
+            // function to change task status
             onStatusChange={handleStatusChange}
-            tasks={filteredTasks}
-            onDelete={handleDelete}
+            tasks={filteredTasks} //filtered tasks display
+            onDelete={handleDelete} //function to delete tasks
          />
       </div>
    );
