@@ -54,7 +54,6 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
                style={getPriorityStyles(task.priority)}>
                Priority: {task.priority}
             </p>
-            <p>Due: {task.dueDate}</p>
          </div>
       </li>
    );

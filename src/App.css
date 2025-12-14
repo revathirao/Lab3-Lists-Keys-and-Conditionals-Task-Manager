@@ -25,13 +25,6 @@ h1 {
    align-items: center;
 }
 
-.task-filter {
-   display: flex;
-   gap: 20px;
-   margin-bottom: 30px;
-   align-items: center;
-}
-
 .task-filter label {
    font-weight: 600;
    color: #2c3e50;
@@ -53,8 +46,7 @@ h1 {
    padding: 20px;
    margin: 20px 0;
    background: #fff;
-   position: relative; /* Key: Establishes context for absolute positioning */
-   /* Removed: display: flex; flex-direction: column; gap: 10px; */
+   position: relative; /*Establishes context for absolute positioning */
 }
 
 .task-item h3 {
@@ -108,6 +100,7 @@ h1 {
 }
 
 /* Color priority */
+
 .priority-low {
    color: green;
 }

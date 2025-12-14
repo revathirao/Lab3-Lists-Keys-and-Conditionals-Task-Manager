@@ -70,8 +70,8 @@ export default function App() {
 
    //function updates the status and Priority
    const handleFilterChange = (filters: any) => {
-      if (filters.status !== undefined) setStatusFilter(filters.status);
-      if (filters.priority !== undefined) setPriorityFilter(filters.priority);
+      setStatusFilter(filters.status ?? "");
+      setPriorityFilter(filters.priority ?? "");
    };
 
    return (
